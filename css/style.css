@@ -1,5 +1,12 @@
 
+img{
 
+    width: 300px;
+    height: 300px; 
+    padding-left: 10px;
+    padding-top: 50px;
+
+}
 
 body{
     font-family: Arial;
@@ -35,11 +42,10 @@ h1{
     font-family: 'Alfa Slab One', cursive;
     font-family: 'Libre Baskerville', serif;
     font-size:50px; 
-    padding-bottom: 10px;
+    
     background-image: url("/img/8.jpg");
     color: seashell;
-    padding-top: 20px;
-    padding-bottom: 20px;
+    padding-top: 50px;
     
     
 }
@@ -51,3 +57,4 @@ p {
     font-size: larger;
     color:salmon;
 }
+
