@@ -15,12 +15,17 @@ const rightImageElement= document.getElementById('right-image');
 let maxAttempts=25;
 let userAttemptsCounter=0;
 
-
+let buttonElement = document.getElementById('button'); 
 let leftImageIndex;
 let MidImageIndex;
 let rightImageIndex;
 let Products=[];
 
+let namesArr = [];
+
+let votesArr = [];
+
+let shownArr=[];
 
 
 function Product(name,src) {
@@ -30,6 +35,7 @@ function Product(name,src) {
   this.votes=0;
  
 Product.all.push(this);
+namesArr.push(this.name); 
 
 }
 
@@ -137,9 +143,11 @@ function handleUserClick(event) {
 
   }else{
 
+    buttonElement.hidden = false;
 
-    document.getElementById("results-list").addEventListener("click", myFunction);
 
+    buttonElement.addEventListener('click', myFunction);
+  
     function myFunction() {
       let list= document.getElementById('results-list');
 
@@ -152,24 +160,116 @@ function handleUserClick(event) {
       listItem.textContent=`${Product.all[i].name} had ${Product.all[i].votes} votes and was seen ${Product.all[i].shown} times `
  
     }
-   
+    buttonElement.removeEventListener('click', myFunction);
  
       
     }
+
+    
+
+    for (let i = 0; i < Product.all.length; i++) {
+      
+      votesArr.push(Product.all[i].votes);
+      shownArr.push(Product.all[i].shown);
+      
+    }
+    console.log( votesArr);
+    console.log( shownArr);
+
+
+ 
+
 
   
 
     leftImageElement.removeEventListener('click',handleUserClick);
     MidImageElement.removeEventListener('click',handleUserClick);
     rightImageElement.removeEventListener('click',handleUserClick);  
-
+    
+    console.log(namesArr);
    
+    showChart();
   }
-  
 
 }
 
+  
 
+
+
+function showChart() {
+
+  const data = {
+    labels: namesArr,
+    datasets: [{
+      label: 'Votes',
+      data: votesArr,
+      backgroundColor: [
+        'rgba(255, 99, 132, 0.2)',
+        'rgba(255, 159, 64, 0.2)',
+        'rgba(255, 205, 86, 0.2)',
+        'rgba(75, 192, 192, 0.2)',
+        'rgba(54, 162, 235, 0.2)',
+        'rgba(153, 102, 255, 0.2)',
+        'rgba(201, 203, 207, 0.2)'
+      ],
+      borderColor: [
+        'rgb(255, 99, 132)',
+        'rgb(255, 159, 64)',
+        'rgb(255, 205, 86)',
+        'rgb(75, 192, 192)',
+        'rgb(54, 162, 235)',
+        'rgb(153, 102, 255)',
+        'rgb(201, 203, 207)'
+      ],
+      borderWidth: 1
+    },
+    {
+      label: 'Shown',
+      data: shownArr,
+      backgroundColor: [
+        'rgba(255, 99, 132, 0.2)',
+        'rgba(255, 159, 64, 0.2)',
+        'rgba(255, 205, 86, 0.2)',
+        'rgba(75, 192, 192, 0.2)',
+        'rgba(54, 162, 235, 0.2)',
+        'rgba(153, 102, 255, 0.2)',
+        'rgba(201, 203, 207, 0.2)'
+      ],
+      borderColor: [
+        'rgb(255, 99, 132)',
+        'rgb(255, 159, 64)',
+        'rgb(255, 205, 86)',
+        'rgb(75, 192, 192)',
+        'rgb(54, 162, 235)',
+        'rgb(153, 102, 255)',
+        'rgb(201, 203, 207)'
+      ],
+      borderWidth: 1
+    }
+  
+  ]
+  };
+
+  const config = {
+    type: 'bar',
+    data: data,
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    },
+  };
+
+
+  var myChart = new Chart(
+    document.getElementById('myChart'),
+    config
+  );
+
+}
 
 
 
