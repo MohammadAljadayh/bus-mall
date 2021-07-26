@@ -27,6 +27,8 @@ let votesArr = [];
 
 let shownArr=[];
 
+let numbers=[];
+
 
 function Product(name,src) {
   this.name= name;
@@ -72,26 +74,40 @@ function getRandomIndex() {
 }
 
 
+
 function renderthereeImages() {
 
- 
+ do {
+
   rightImageIndex=getRandomIndex();
-  Product.all[rightImageIndex].shown++;
+  
+  
+
+ }
+ while(includeN(rightImageIndex)); 
+
+
   do {
     leftImageIndex=getRandomIndex();
-    Product.all[leftImageIndex].shown++;
-  } while(leftImageIndex=== rightImageIndex);
+   
+
+    console.log(leftImageIndex,rightImageIndex);
+    console.log(numbers);
+
+  } while(leftImageIndex===rightImageIndex||includeN(leftImageIndex)
+
+  );
 
   do {
     MidImageIndex=getRandomIndex();
-    Product.all[ MidImageIndex].shown++;
-  } while(MidImageIndex===leftImageIndex || MidImageIndex===rightImageIndex);
+   
+  } while(MidImageIndex===leftImageIndex ||MidImageIndex===rightImageIndex||includeN(MidImageIndex));
 
 
 
+numbers=[leftImageIndex,rightImageIndex,MidImageIndex];
   
-  
- console.log(leftImageIndex,rightImageIndex,MidImageIndex);
+ console.log(numbers);
 
   
 
@@ -100,8 +116,12 @@ function renderthereeImages() {
 
 
 leftImageElement.src=Product.all[leftImageIndex].source;
+
+Product.all[leftImageIndex].shown++;
 MidImageElement.src=Product.all[MidImageIndex].source;
+Product.all[ MidImageIndex].shown++;
 rightImageElement.src=Product.all[rightImageIndex].source;
+Product.all[rightImageIndex].shown++;
 
 
 
@@ -110,6 +130,11 @@ rightImageElement.src=Product.all[rightImageIndex].source;
 
 renderthereeImages();
 
+function includeN(index)
+{
+return numbers.includes(index);
+
+}
 
 leftImageElement.addEventListener('click',handleUserClick);
  MidImageElement.addEventListener('click',handleUserClick);
@@ -126,7 +151,7 @@ function handleUserClick(event) {
 
 
 
-  if (userAttemptsCounter<=maxAttempts) {
+  if (userAttemptsCounter<maxAttempts) {
 
 
     if (event.target.id==='left-image') {
@@ -134,14 +159,21 @@ function handleUserClick(event) {
       Product.all[leftImageIndex].votes++;
       console.log(Product.all[leftImageIndex]);
 
-    }else{
-      Product.all[rightImageIndex].votes++;
-      console.log(Product.all[rightImageIndex]);
+    }else if(event.target.id==='Mid-image')
+    {
+      Product.all[MidImageIndex].votes++;
+      console.log(Product.all[MidImageIndex]);
     }
+else {
 
+  Product.all[rightImageIndex].votes++;
+  console.log(Product.all[rightImageIndex]);
+
+}
     renderthereeImages();
 
   }else{
+
 
     buttonElement.hidden = false;
 
