@@ -38,12 +38,15 @@ function Product(name,src) {
  
 Product.all.push(this);
 namesArr.push(this.name); 
+//Product.V.push(this);
 
 }
-
+//Product.V = [];
 Product.all=[];
 
+
 console.log(Product.all)
+//console.log(Product.V)
 
 new Product('bag','img/bag.jpg');//1
 new Product('banana','img/banana.jpg');//2
@@ -73,6 +76,40 @@ function getRandomIndex() {
   return Math.floor(Math.random() * Product.all.length);
 }
 
+
+function updateStorage() {
+  
+ 
+  console.log(Product.all);
+
+  let stringArr=JSON.stringify(Product.all);
+  console.log(stringArr);
+
+  localStorage.setItem('Product',stringArr);
+
+}
+
+
+function getproductorder() {
+  
+  let data=localStorage.getItem('Product');
+  console.log(data);
+
+
+  let parsedArr=JSON.parse(data)
+  console.log(parsedArr);
+
+  if (parsedArr !==null) {
+
+    Product.all=parsedArr;
+  
+   
+    console.log(Product.all);
+
+  }
+  renderthereeImages();
+  console.log(Product.all);
+}
 
 
 function renderthereeImages() {
@@ -151,7 +188,7 @@ function handleUserClick(event) {
 
 
 
-  if (userAttemptsCounter<maxAttempts) {
+  if (userAttemptsCounter<=maxAttempts) {
 
 
     if (event.target.id==='left-image') {
@@ -219,13 +256,14 @@ else {
     rightImageElement.removeEventListener('click',handleUserClick);  
     
     console.log(namesArr);
-   
+    updateStorage();
     showChart();
+
   }
 
 }
 
-  
+getproductorder();
 
 
 
